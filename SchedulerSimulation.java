@@ -1,5 +1,5 @@
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Queue; 
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Random;
@@ -35,12 +35,28 @@ class Process implements Runnable {
         this.name = name;
         this.burstTime = burstTime;
         this.timeQuantum = timeQuantum;
-        this.remainingTime = burstTime; // Initially, remaining time is equal to the burst time
+        this.remainingTime = burstTime;    
+------------------------------------------------------------- 
+        // initialize new features
+        this.priority = ( int)
+        (Math.random()*5) +1;
+               this.waiting Time=0;
+        Inital wait
+               this.arrivalTime = System.currentTimeMillis();
+----------------------------------------------------------------
+        // Initially, remaining time is equal to the burst time
+        private int priority;
+        private long waitingTime;
+        private long arrivalTime;
+--------------------------------------------------------------
     }
 
     // This method will be called when the thread for this process is started
     @Override
     public void run() {
+        time ( current Time - last time it entered queuq) 
+                   this.watingTime + = ( System.currentTimeMillis()- arrival Time);
+        ---------------------------------------------------------------------------------
         // Simulate running for either the time quantum or remaining time, whichever is smaller
         int runTime = Math.min(timeQuantum, remainingTime); // Run for the smaller of the two times
         
@@ -147,8 +163,8 @@ public class SchedulerSimulation {
     public static void main(String[] args) {
         // ⚠️ IMPORTANT: Put your student ID here to seed the random number generator
         // This makes your output unique to you - DO NOT forget to change this!
-        int studentID = 123456789;  // ← CHANGE THIS TO YOUR ACTUAL STUDENT ID
-        
+        int studentID = 445050098;  // ← CHANGE THIS TO YOUR ACTUAL STUDENT ID
+        // set student id and initialized project
         Random random = new Random(studentID);
         
         // Define the time quantum in milliseconds (the maximum time a process gets in one round)

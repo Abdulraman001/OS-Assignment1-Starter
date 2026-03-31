@@ -42,10 +42,10 @@ class Process implements Runnable {
         // initialize new features
         this.priority = (int)
         (Math.random()  *  5) + 1;
-               this.waitingTime= 0;
-               this.arrivalTime = System.currentTimeMillis();
+               this.waitingTime = 0;
+               this.arrivalTime =
+                   System.currentTimeMillis();
 ----------------------------------------------------------------
-        // Initially, remaining time is equal to the burst time
             }
 
     // This method will be called when the thread for this process is started

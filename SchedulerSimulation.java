@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.Queue; 
 import java.util.Map;
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.Random;
 
 // ANSI Color Codes for enhanced terminal output
@@ -28,15 +28,12 @@ class Process implements Runnable {
     private String name; // Name of the process
     private int burstTime; // Total time the process requires to complete (in milliseconds)
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
-    private int remainingTime; // Time left for the process to finish its execution
+   private int remainingTime; // Time left for the process to finish its execution
+    // new fields for Priority and wating time
     private int priority;
-    private long waitingTime;
+    private long waitingTime; 
     private long arrivalTime;
-    // new fields for Priority and wating time 
-    private int priority;
-    private long totalwaitingTime;
-    private long creatiionTime;
-    private long lastReadyTime; aaa
+ 
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum) {
         this.name = name;
@@ -44,34 +41,31 @@ class Process implements Runnable {
         this.timeQuantum = timeQuantum;
         this.remainingTime = burstTime;    
 
-    // random priority
-    
-        this.priority = (int)   
-        (Math.random()  *  5) + 1;
-        this.totalWaitTime = 0 ;
-        this.arrivalTimestamp =
-            System.currentTimestamp();
-    
+      // Initialize priority and timing
+        this.priority = (int)(Math.random() * 5) + 1;
+        this.waitingTime = 0;
+        this.arrivalTime = System.currentTimeMillis();
+    }
 
             }
 
     // This method will be called when the thread for this process is started
     @Override
     public void run() {
-        // update waiting time
-          this. totalwatingTime + = ( System.currentTimeMillis()- arrivalTime);
+        // Update waiting time: time spent in queue before execution
+        this.waitingTime += (System.currentTimeMillis() - arrivalTime);
         ---------------------------------------------------------------------------------
         // Simulate running for either the time quantum or remaining time, whichever is smaller
         int runTime = Math.min(timeQuantum, remainingTime); // Run for the smaller of the two times
         
         // Show quantum execution starting
-        String quantumBar = createProgressBar(0, 15);
+        
         System.out.println(Colors.BRIGHT_GREEN + "  ▶ " + Colors.BOLD + Colors.CYAN + name + 
                           Colors.RESET + Colors.GREEN + " executing quantum" + Colors.RESET + 
                           " [" + runTime + "ms] ");
         
         try {
-            thread.sleep(runTime);
+        
             // Simulate quantum execution with progress updates
             int steps = 5; // Number of progress updates
             int stepTime = runTime / steps;
@@ -108,20 +102,7 @@ class Process implements Runnable {
             // If no time is left, the process has finished its execution
             System.out.println(Colors.BRIGHT_GREEN + "  ✓ " + Colors.BOLD + Colors.CYAN + name + 
                               Colors.RESET + Colors.BRIGHT_GREEN + " finished execution!" + 
-                              Colors.RESET);
-// update entry time for next round
-            -----------------------------------------------
-                public int getPriorty() 
-                   { return priority;}
-            public long getWaitingTime()
-                   { return WaitingTime; }
-            
-            public void setArrivealTime () {
-                this.arrivalTime = System.currentTime Millis();
-            }
-            
-            
-            ------------------------------------------------------
+                            Colors.RESET);
         }
         System.out.println();
     }
@@ -153,29 +134,19 @@ class Process implements Runnable {
             System.out.println(Colors.BRIGHT_GREEN + "  ✓ " + Colors.BOLD + Colors.CYAN + name + 
                               Colors.RESET + Colors.BRIGHT_GREEN + " finished execution!" + Colors.RESET);
             System.out.println();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e)
+            { e.printStackTrace(); } {
             System.out.println(Colors.RED + "  ✗ " + name + " was interrupted." + Colors.RESET);
         }
     }
 
     // Getter methods for process name, burst time, and remaining time
-    public String getName() {
-        return name;
-    }
-
-    public int getBurstTime() {
-        return burstTime;
-    }
-
-    public int getRemainingTime() {
-        return remainingTime;
-    }
-
-    // Check if the process has finished (i.e., no remaining time)
-    public boolean isFinished() {
-        return remainingTime <= 0;
-    }
-}
+    public String getName() { return name; }
+    public int getBurstTime() { return burstTime; }
+    public int getPriority() { return priority; }
+    public long getWaitingTime() { return waitingTime; }
+    public boolean isFinished() { return remainingTime <= 0; }
+    public void setArrivalTime() { this.arrivalTime = System.currentTimeMillis(); }
 
 public class SchedulerSimulation {
     public static void main(String[] args) {

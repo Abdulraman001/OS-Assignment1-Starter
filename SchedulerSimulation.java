@@ -29,7 +29,9 @@ class Process implements Runnable {
     private int burstTime; // Total time the process requires to complete (in milliseconds)
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
     private int remainingTime; // Time left for the process to finish its execution
-
+        private int priority;
+        private long waitingTime;
+        private long arrivalTime;
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum) {
         this.name = name;
@@ -38,18 +40,14 @@ class Process implements Runnable {
         this.remainingTime = burstTime;    
 ------------------------------------------------------------- 
         // initialize new features
-        this.priority = ( int)
+        this.priority = (int)
         (Math.random()*5) +1;
-               this.waiting Time=0;
-        Inital wait
+               this.waitingTime=0;
+        lnital wait
                this.arrivalTime = System.currentTimeMillis();
 ----------------------------------------------------------------
         // Initially, remaining time is equal to the burst time
-        private int priority;
-        private long waitingTime;
-        private long arrivalTime;
---------------------------------------------------------------
-    }
+            }
 
     // This method will be called when the thread for this process is started
     @Override

@@ -29,9 +29,9 @@ class Process implements Runnable {
     private int burstTime; // Total time the process requires to complete (in milliseconds)
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
     private int remainingTime; // Time left for the process to finish its execution
-        private int priority;
-        private long waitingTime;
-        private long arrivalTime;
+    private int priority;
+    private long waitingTime;
+    private long arrivalTime;
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum) {
         this.name = name;
@@ -41,9 +41,8 @@ class Process implements Runnable {
 ------------------------------------------------------------- 
         // initialize new features
         this.priority = (int)
-        (Math.random()*5) +1;
-               this.waitingTime=0;
-        lnital wait
+        (Math.random()  *  5) + 1;
+               this.waitingTime= 0;
                this.arrivalTime = System.currentTimeMillis();
 ----------------------------------------------------------------
         // Initially, remaining time is equal to the burst time
@@ -52,8 +51,7 @@ class Process implements Runnable {
     // This method will be called when the thread for this process is started
     @Override
     public void run() {
-        time ( current Time - last time it entered queuq) 
-                   this.watingTime + = ( System.currentTimeMillis()- arrival Time);
+        time minus arrival time in queue  this.watingTime + = ( System.currentTimeMillis()- arrivalTime);
         ---------------------------------------------------------------------------------
         // Simulate running for either the time quantum or remaining time, whichever is smaller
         int runTime = Math.min(timeQuantum, remainingTime); // Run for the smaller of the two times
@@ -104,13 +102,16 @@ class Process implements Runnable {
                               Colors.RESET);
 // update entry time for next round
             -----------------------------------------------
+                public int getPriorty() 
+                   { return priority;}
+            public long getWaitingTime()
+                   { return WaitingTime; }
+            
             public void setArrivealTime () {
                 this.arrivalTime = System.currentTime Millis();
             }
-            public int getPriorty() 
-                   { return priority;}
-            public long get WaitingTime()
-                   { return WaitingTime}
+            
+            
             ------------------------------------------------------
         }
         System.out.println();
@@ -285,7 +286,7 @@ public class SchedulerSimulation {
                 // If the process still has remaining time, check if there are more processes in queue
                 if (!processQueue.isEmpty()) {
                     ----------------------------------
-                    proces.setArrivalTime(); // update time before re-entering
+                    process.setArrivalTime(); // update time before re-entering
                     -----------------------------------
                     // Re-enqueue the process to give it another chance to run in the next round
                     addProcessToQueue(process, processQueue, processMap);
@@ -314,16 +315,16 @@ public class SchedulerSimulation {
         //  Final Features Report  
         System.out.println(Colors.BOLD + Colors.YELLOW + "\n>> Total Context Switches: " + contextSwitches + Colors.RESET);
         
-        System.out.println(Colors.CYAN + "---------------------------------");
+        System.out.println(Colors.CYAN + "-------------------------------------------------------------------------------------------");
         System.out.printf(Colors.BOLD + "%-12s | %-10s | %-12s | %-15s\n", "Process", "Priority", "Burst Time", "Wait Time" + Colors.RESET);
-        System.out.println(Colors.CYAN + "---------------------------------");
+        System.out.println(Colors.CYAN + "--------------------------------------------------------------------------------------------");
         
         // Use the processMap to iterate and print each process's final stats
         for (Process p : processMap.values()) {
         System.out.printf("%-12s | %-10d | %-12d | %-15d ms\n", 
                p.getName(), p.getPriority(), p.getBurstTime(), p.getWaitingTime());
         }
-        System.out.println(Colors.CYAN + "-----------------------------\n" + Colors.RESET);
+        System.out.println(Colors.CYAN + "---------------------------------------------------------------------------------------------\n" + Colors.RESET);
     }
     
     // Method to add a process to the queue and map, while printing a "ready" message

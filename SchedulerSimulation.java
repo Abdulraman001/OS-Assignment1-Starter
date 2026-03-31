@@ -13,7 +13,7 @@ class Colors {
     public static final String YELLOW = "\u001B[33m";
     public static final String MAGENTA = "\u001B[35m";
     public static final String BLUE = "\u001B[34m";
-    public static final String RED = "\u001B[31m";
+    public static final String RED = "\u001B[31m"; 
     public static final String BG_BLUE = "\u001B[44m";
     public static final String BG_GREEN = "\u001B[42m";
     public static final String WHITE = "\u001B[37m";
@@ -29,29 +29,34 @@ class Process implements Runnable {
     private int burstTime; // Total time the process requires to complete (in milliseconds)
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
     private int remainingTime; // Time left for the process to finish its execution
+    // new fields for Priority and wating time 
     private int priority;
-    private long waitingTime;
-    private long arrivalTime;
+    private long totalwaitingTime;
+    private long creatiionTime;
+    private long lastReadyTime;
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum) {
         this.name = name;
         this.burstTime = burstTime;
         this.timeQuantum = timeQuantum;
         this.remainingTime = burstTime;    
-------------------------------------------------------------- 
-        // initialize new features
-        this.priority = (int)
+
+    // random priority
+    
+        this.priority = (int)   
         (Math.random()  *  5) + 1;
-               this.waitingTime = 0;
-               this.arrivalTime =
-                   System.currentTimeMillis();
-----------------------------------------------------------------
+        
+ // initialize timing
+        this.arrivalTimestamp= System.currentTimestamp();
+        this.totalWaitTime = 0 ;
+
             }
 
     // This method will be called when the thread for this process is started
     @Override
     public void run() {
-        time minus arrival time in queue  this.watingTime + = ( System.currentTimeMillis()- arrivalTime);
+        // update waiting time
+          this. totalwatingTime + = ( System.currentTimeMillis()- arrivalTime);
         ---------------------------------------------------------------------------------
         // Simulate running for either the time quantum or remaining time, whichever is smaller
         int runTime = Math.min(timeQuantum, remainingTime); // Run for the smaller of the two times
@@ -63,6 +68,7 @@ class Process implements Runnable {
                           " [" + runTime + "ms] ");
         
         try {
+            thread.sleep(runTime);
             // Simulate quantum execution with progress updates
             int steps = 5; // Number of progress updates
             int stepTime = runTime / steps;

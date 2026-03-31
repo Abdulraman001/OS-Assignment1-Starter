@@ -104,6 +104,16 @@ class Process implements Runnable {
             System.out.println(Colors.BRIGHT_GREEN + "  ✓ " + Colors.BOLD + Colors.CYAN + name + 
                               Colors.RESET + Colors.BRIGHT_GREEN + " finished execution!" + 
                               Colors.RESET);
+// update entry time for next round
+            -----------------------------------------------
+            public void setArrivealTime () {
+                this.arrivalTime = System.currentTime Millis();
+            }
+            public int getPriorty() 
+                   { return priority;}
+            public long get WaitingTime()
+                   { return WaitingTime}
+            ------------------------------------------------------
         }
         System.out.println();
     }
@@ -163,10 +173,12 @@ public class SchedulerSimulation {
     public static void main(String[] args) {
         // ⚠️ IMPORTANT: Put your student ID here to seed the random number generator
         // This makes your output unique to you - DO NOT forget to change this!
-        int studentID = 445050098;  // ← CHANGE THIS TO YOUR ACTUAL STUDENT ID
+        -----------------------------------------
+        int studentID = 445050098; // ← CHANGE THIS TO YOUR ACTUAL STUDENT ID
+        int contextSwit ches = 0;
         // set student id and initialized project
         Random random = new Random(studentID);
-        
+        ---------------------------------------------
         // Define the time quantum in milliseconds (the maximum time a process gets in one round)
         // Choose a random number between 2000 and 5000 ms with a step of 1000 ms
         int timeQuantum = 2000 + random.nextInt(4) * 1000; // Random: 2000, 3000, 4000, or 5000
@@ -241,7 +253,7 @@ public class SchedulerSimulation {
             System.out.print(Colors.MAGENTA + "│ " + Colors.RESET + Colors.BRIGHT_WHITE + "[" + Colors.RESET);
             int queueCount = 0;
             for (Thread thread : processQueue) {
-                Process process = processMap.get(thread);
+                Process process = processMap.get(thread); 
                 if (queueCount > 0) System.out.print(Colors.WHITE + " → " + Colors.RESET);
                 System.out.print(Colors.BRIGHT_CYAN + process.getName() + Colors.RESET);
                 queueCount++;
@@ -253,7 +265,11 @@ public class SchedulerSimulation {
             System.out.println(Colors.BOLD + Colors.MAGENTA + "└" + "─".repeat(79) + Colors.RESET + "\n");
             
             // Start the thread, which will run the process for one time quantum
+            -------------------------------------------------
+            counter each time a process start running
+                contextSwitches++;
             currentThread.start();
+            ---------------------------------------------------
             
             try {
                 // Wait for the thread to finish its time quantum before continuing to the next process
@@ -266,9 +282,13 @@ public class SchedulerSimulation {
             Process process = processMap.get(currentThread);
             
             // Check if the process is not finished
-            if (!process.isFinished()) {
+            if (!process.isFinished()) 
+            {
                 // If the process still has remaining time, check if there are more processes in queue
                 if (!processQueue.isEmpty()) {
+                    ----------------------------------
+                    proces.setArrivalTime(); // update time before re-entering
+                    -----------------------------------
                     // Re-enqueue the process to give it another chance to run in the next round
                     addProcessToQueue(process, processQueue, processMap);
                 } else {
@@ -292,6 +312,20 @@ public class SchedulerSimulation {
         System.out.println(Colors.BOLD + Colors.BRIGHT_GREEN + 
                           "╚════════════════════════════════════════════════════════════════════════════════╝" + 
                           Colors.RESET + "\n");
+        
+        //  Final Features Report  
+        System.out.println(Colors.BOLD + Colors.YELLOW + "\n>> Total Context Switches: " + contextSwitches + Colors.RESET);
+        
+        System.out.println(Colors.CYAN + "---------------------------------");
+        System.out.printf(Colors.BOLD + "%-12s | %-10s | %-12s | %-15s\n", "Process", "Priority", "Burst Time", "Wait Time" + Colors.RESET);
+        System.out.println(Colors.CYAN + "---------------------------------");
+        
+        // Use the processMap to iterate and print each process's final stats
+        for (Process p : processMap.values()) {
+        System.out.printf("%-12s | %-10d | %-12d | %-15d ms\n", 
+               p.getName(), p.getPriority(), p.getBurstTime(), p.getWaitingTime());
+        }
+        System.out.println(Colors.CYAN + "-----------------------------\n" + Colors.RESET);
     }
     
     // Method to add a process to the queue and map, while printing a "ready" message

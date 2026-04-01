@@ -224,6 +224,7 @@ public class SchedulerSimulation {
             // Get the next thread from the queue (FIFO)
             Thread currentThread = processQueue.poll(); // Dequeues the next thread
             Process process = processMap.get(currentThread);
+            if( process!= bull && ! process.is Finished()){
             
             // Print the current process queue (list of process IDs in the queue)
             System.out.println(Colors.BOLD + Colors.MAGENTA + "┌─ Ready Queue " + "─".repeat(65) + Colors.RESET);
@@ -242,16 +243,17 @@ public class SchedulerSimulation {
             System.out.println(Colors.BOLD + Colors.MAGENTA + "└" + "─".repeat(79) + Colors.RESET + "\n");
             
             // Start the thread, which will run the process for one time quantum
-            -------------------------------------------------
+            
             counter each time a process start running
-                contextSwitches++;
+             contextSwitches++;
             currentThread.start();
-            ---------------------------------------------------
+
             
             try {
                 // Wait for the thread to finish its time quantum before continuing to the next process
                 currentThread.join();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException e) 
+                {
                 System.out.println("Main thread interrupted.");
             }
             
@@ -263,16 +265,13 @@ public class SchedulerSimulation {
             {
                 // If the process still has remaining time, check if there are more processes in queue
                 if (!processQueue.isEmpty()) {
-                    ----------------------------------
+                
                     process.setArrivalTime(); // update time before re-entering
-                    -----------------------------------
+                   
                     // Re-enqueue the process to give it another chance to run in the next round
                     addProcessToQueue(process, processQueue, processMap);
                 } else {
-                    // If this is the last process in the queue, run it to completion
-                    System.out.println(Colors.BRIGHT_YELLOW + "  ⚠ " + Colors.CYAN + process.getName() + 
-                                      Colors.RESET + Colors.YELLOW + " is the last process → running to completion" + 
-                                      Colors.RESET);
+                    
                     process.runToCompletion(); // Run until the process completes
                 }
             }

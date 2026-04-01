@@ -29,22 +29,19 @@ class Process implements Runnable {
     private int burstTime; // Total time the process requires to complete (in milliseconds)
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
    private int remainingTime; // Time left for the process to finish its execution
-    // new fields for Priority and wating time
     private int priority;
-    private long waitingTime; 
+    private long waitingTime;      // new fields for Priority and wating time
     private long arrivalTime;
  
-    // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum) {
         this.name = name;
         this.burstTime = burstTime;
-        this.timeQuantum = timeQuantum;
+        this.timeQuantum = timeQuantum;            // Initialize priority and timing
         this.remainingTime = burstTime;    
-
-      // Initialize priority and timing
         this.priority = (int)(Math.random() * 5) + 1;
         this.waitingTime = 0;
         this.arrivalTime = System.currentTimeMillis();
+
     }
 
             }
@@ -54,7 +51,7 @@ class Process implements Runnable {
     public void run() {
         // Update waiting time: time spent in queue before execution
         this.waitingTime += (System.currentTimeMillis() - arrivalTime);
-        ---------------------------------------------------------------------------------
+        
         // Simulate running for either the time quantum or remaining time, whichever is smaller
         int runTime = Math.min(timeQuantum, remainingTime); // Run for the smaller of the two times
         
@@ -73,7 +70,7 @@ class Process implements Runnable {
             for (int i = 1; i <= steps; i++) {
                 Thread.sleep(stepTime);
                 int quantumProgress = (i * 100) / steps;
-                quantumBar = createProgressBar(quantumProgress, 15);
+                 String quantumBar = createProgressBar(quantumProgress, 15);
                 
                 // Clear line and show updated progress
                 System.out.print("\r  " + Colors.YELLOW + "⚡" + Colors.RESET + 
@@ -154,7 +151,7 @@ public class SchedulerSimulation {
         // This makes your output unique to you - DO NOT forget to change this!
         -----------------------------------------
         int studentID = 445050098; // ← CHANGE THIS TO YOUR ACTUAL STUDENT ID
-        int contextSwit ches = 0;
+        int contextSwitches = 0;
         // set student id and initialized project
         Random random = new Random(studentID);
         ---------------------------------------------
